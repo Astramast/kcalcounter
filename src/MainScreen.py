@@ -3,7 +3,7 @@ from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from NumberHolder import NumberHolder
 from Calculator import Calculator
-from Memory import Memory
+from Database import Database
 
 class MainScreen(Screen):
 	def __init__(self, number, **kwargs):
@@ -25,14 +25,16 @@ class MainScreen(Screen):
 		self.add_widget(main_layout)
 	
 	def onNumberConfirmationPress(self, number):
-		Memory().add(number)
+		with Database() as db:
+			db.add(number)
+		self.main_number.setNumber(0)
 
-	def onHistoryButtonPress(self):
+	def onHistoryButtonPress(self, instance):
 		self.manager.current = 'history'
 
-	def onResetButtonPress(self):
-		self.main_number.set_number(0)
+	def onResetButtonPress(self, instance):
+		self.main_number.setNumber(0)
 
 	def onResultConfirmationPress(self, number):
-		self.main_number.set_number(number)
+		self.main_number.setNumber(self.main_number.number + number)
 

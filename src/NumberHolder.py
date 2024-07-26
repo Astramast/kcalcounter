@@ -6,13 +6,14 @@ from kivy.uix.widget import Widget
 class NumberHolder(BoxLayout):
 	def __init__(self, number, listener, **kwargs):
 		super(NumberHolder, self).__init__(**kwargs, orientation='horizontal')
+		self.listener = listener
 		self.number = number
 		self.label = Label(text=str(number))
 		button = Button(text='V', on_press=self.onButtonPress)
 		self.add_widget(self.label)
 		self.add_widget(button)
 
-	def set_number(self, number):
+	def setNumber(self, number):
 		self.number = number
 		self.label.text = str(number)
 
